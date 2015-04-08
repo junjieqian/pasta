@@ -6,7 +6,7 @@ import sys
 import platform
 
 from src.util import Settings
-from src.logreader import Logreader
+#from src.logreader import Logreader
 
 def display_usage():
   print '*' * 66

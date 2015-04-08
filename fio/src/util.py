@@ -26,7 +26,10 @@ class Settings:
   _log_dir = _cur_dir + os.sep + 'Logs'
   _cfg_dir = _cur_dir + os.sep + 'Configures'
 
-  def _util_create_cfg():
+  def __init__(self, workload_filename):
+    self._workload_filename = workload_filename
+
+  def run(self):
     """ Configure files: import the workload file as job settings
     """
     _cfg_filename = _cfg_dir + os.sep + time.strftime("%m%d%Y")

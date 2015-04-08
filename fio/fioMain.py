@@ -5,6 +5,9 @@ import os
 import sys
 import platform
 
+from src.util import Settings
+from src.logreader import Logreader
+
 def display_usage():
   print '*' * 66
   print 'I/O evaluation with FIO for parallel I/Os on many-core system'
@@ -15,8 +18,14 @@ def display_usage():
   print '*' * 66
   return
 
+def main():
+  util = Settings(sys.argv[1])
+  util.run()
+
 if __name__ == "__main__":
-#  if not platform.system() == "Linux":
-#    sys.exit("OS version not supported\n")
-  display_usage()
+  if not platform.system() == "Linux":
+    sys.exit("OS version not supported\n")
+  if len(sys.argv) < 2:
+    display_usage()
+    sys.exit()
   main()

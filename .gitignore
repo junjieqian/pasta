@@ -1,0 +1,8 @@
+S junk files
+[Tt]humbs.db
+*.DS_Store
+
+*.log
+fio/IOSTATs/*
+fio/Configures/*
+*.pyc

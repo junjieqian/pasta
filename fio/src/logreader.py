@@ -46,6 +46,7 @@ class reader:
     ret = csv.writer(open("fiolog.csv", "wb"))
     ret.writerow(["testnum", "throughput", "disk utilization", "average bandwidth", "iops"])
     for roots, dirs, files in os.walk(self._perf_path):
+      files.sort(key=lambda x:int(x.split('.')[0]))
       for f in [os.path.join(roots, fs) for fs in files]:
         fp = open(f)
         count = 0
@@ -92,6 +93,7 @@ class reader:
     for roots, dirs, files in os.walk(self._iostat_path):
       _timestamp_flag = False
       _data_flag = False
+      files.sort()
       for f in files:
         _testnum = f.split()[-1]
         fp = open(os.path.join(roots, f))

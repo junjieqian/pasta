@@ -6,7 +6,7 @@ import sys
 import platform
 
 from src.util import Settings
-#from src.logreader import Logreader
+from src.logreader import reader
 
 def display_usage():
   print '*' * 66
@@ -19,8 +19,11 @@ def display_usage():
   return
 
 def main():
-  util = Settings(sys.argv[1])
-  util.run()
+#  util = Settings(sys.argv[1])
+#  util.run()
+  logreader = reader("./workload/workload_numjobs.csv", "./Logs", "./IOSTATs")
+  logreader.perf_read()
+  logreader.iostat_read()
 
 if __name__ == "__main__":
   if not platform.system() == "Linux":

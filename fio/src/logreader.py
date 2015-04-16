@@ -69,9 +69,9 @@ class reader:
           _testnum = word[2]
 	  _iops += float(word[7])
           _throughput += float(word[6])
-          _disk_utilization += float(word[-1].split('\n')[0].strip('%'))/100
-          _cpu_user += float(word[87].strip('%'))/100
-          _cpu_system += float(word[88].strip('%'))/100
+          _disk_utilization += float(word[-1].split('\n')[0].strip('%'))
+          _cpu_user += float(word[87].strip('%'))
+          _cpu_system += float(word[88].strip('%'))
           _context_switches += float(word[89])
           _average_bandwidth += (int(word[6])+int(word[47]))/2.0
           _write_submission_latency += float(word[52])
@@ -88,7 +88,7 @@ class reader:
     ret.writerow(["testnum", "software layer", "io wait"])
     # start time needs to be modified according to the system boot time
     # _boot_time format, [month, day, hour, minutes, seconds]
-    _boot_time = [4, 7, 20, 56, 0]
+    _boot_time = [4, 15, 10, 25, 9]
     _cur_time  = [0, 0, 0, 0, 0]
     for roots, dirs, files in os.walk(self._iostat_path):
       _timestamp_flag = False

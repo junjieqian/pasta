@@ -14,16 +14,19 @@ def display_usage():
   print 'Author: Junjie Qian (jqian.unl@gmail.com)'
   print '-' * 66
   print 'Usage: %s [options]'%sys.argv[0]
-  print '  -f workload: Set the test workload file path required'
+  print '  workload: Set the test workload file path required'
+  print '  logreader: Read the logs (path predefined, but subject to change)'
   print '*' * 66
   return
 
 def main():
-#  util = Settings(sys.argv[1])
-#  util.run()
-  logreader = reader("./workload/workload_numjobs.csv", "./Logs", "./IOSTATs")
-  logreader.perf_read()
-  logreader.iostat_read()
+  if sys.argv[1] != "logreader":
+    util = Settings(sys.argv[1])
+    util.run()
+  else:
+    logreader = reader("./workload/workload_numjobs.csv", "./Logs", "./IOSTATs")
+    logreader.perf_read()
+    logreader.iostat_read()
 
 if __name__ == "__main__":
   if not platform.system() == "Linux":

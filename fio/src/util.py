@@ -63,7 +63,14 @@ class Settings:
           job_filename = now + "_" + self._testnum
           job_log_filename = _log_dir + os.sep + self._testnum + ".log"
 
-          _command = "fio" + " " + "--name=%s"%self._testnum + " " + "--output=%s"%job_log_filename + " " + "--minimal" + " " + "--bs=%s"%self._blocksize + " " + "--ioengine=libaio" + " " + "--iodepth=%s"%self._iodepth + " " + "--size=%s"%self._filesize + " " + "--percentage_random=%s"%int(_access_list[0].rstrip("%")) + " " + "--rwmixread=%s"%int(_access_list[2].rstrip("%")) + " " + "--numjobs=%s"%self._workers + " " + "--filename=%s"%self._device + " " + "--group_reporting" + " " + "--loops=3" + " " + "--thread"
+          _command = "fio" + " " + "--name=%s"%self._testnum + " " + \
+			  "--output=%s"%job_log_filename + " " + "--minimal" + " " + \
+			  "--bs=%s"%self._blocksize + " " + "--ioengine=libaio" + " " + \
+			  "--iodepth=%s"%self._iodepth + " " + "--size=%s"%self._filesize + \
+			  " " + "--percentage_random=%s"%int(_access_list[0].rstrip("%")) + \
+			  " " + "--rwmixread=%s"%int(_access_list[2].rstrip("%")) + " " + \
+			  "--numjobs=%s"%self._workers + " " + "--filename=%s"%self._device + \
+			  " " + "--group_reporting" + " " + "--loops=3" + " " + "--thread"
           print _command
           if _numa_nodes != "":
             _command += " " + "--numa_cpu_nodes=%s"%_numa_nodes

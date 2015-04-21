@@ -10,6 +10,8 @@
 #
 # ./configure && make && sudo make install
 # Or: sudo apt-get install oprofile
-sudo operf fio --name=1 --bs=4k --ioengine=libaio --iodepth=1 --size=1g --percentage_random=100 --rwmixread=100 --numjobs=4 --filename=/dev/nvme0n1 --group_reporting --thread
+sudo operf fio --name=1 --bs=4k --ioengine=libaio --iodepth=1 --size=1g \
+         --percentage_random=100 --rwmixread=100 --numjobs=4 \
+	 --filename=/dev/nvme0n1 --group_reporting --thread
 sudo opreport -l
 

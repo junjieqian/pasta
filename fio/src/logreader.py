@@ -10,6 +10,7 @@ class reader:
   _perf_path = ""
   _iostat_path = ""
   _workload_filename = ""
+  _blocksize = ""
 
   def __init__(self, workload_filename, perf_path, iostat_path):
     # @param workload_filename, the defination of the workload run
@@ -26,7 +27,7 @@ class reader:
         else:
           _testnum = row[0]
           _filesize = row[1]
-          _blocksize = row[2]
+          self._blocksize = row[2]
           _patern = row[3]
           _access_list = _patern.split()
           _runtime = row[4]
@@ -67,8 +68,8 @@ class reader:
           word = line.split(";")
           count += 1
           _testnum = word[2]
-	  _iops += float(word[7])
-          _throughput += float(word[6])
+	  _iops += (float(word[7]) + float(word[48]))/2.0
+          _throughput += _iops * int(self._blocksize.split('K')[0])
           _disk_utilization += float(word[-1].split('\n')[0].strip('%'))
           _cpu_user += float(word[87].strip('%'))
           _cpu_system += float(word[88].strip('%'))

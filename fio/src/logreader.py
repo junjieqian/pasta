@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# logreader for group_reporting logs
+
 import string
 import os
 import sys
@@ -45,7 +47,7 @@ class reader:
     if not os.path.isdir(self._perf_path):
       return
     ret = csv.writer(open("fiolog.csv", "wb"))
-    ret.writerow(["testnum", "throughput", "disk utilization", "average bandwidth", "iops"])
+    ret.writerow(["testnum", "iops", "disk utilization", "average bandwidth"])
     for roots, dirs, files in os.walk(self._perf_path):
       files.sort(key=lambda x:int(x.split('.')[0]))
       for f in [os.path.join(roots, fs) for fs in files]:
@@ -62,25 +64,33 @@ class reader:
         _write_completion_latency = 0.0
         _read_submission_latency = 0.0
         _read_completion_latency = 0.0
+        _dev_id1 = -1
 	for line in fp:
           if not "fio-2.1.3" in line:
             continue
           word = line.split(";")
+          _dev_id1 = word.index("nvme0n1")
           count += 1
           _testnum = word[2]
-	  _iops += (float(word[7]) + float(word[48]))/2.0
+          _iops += (float(word[7]) + float(word[48]))/2.0
           _throughput += _iops * int(self._blocksize.split('K')[0])
-          _disk_utilization += float(word[-1].split('\n')[0].strip('%'))
+          if line.find("nvme1n1") < 0:
+            _disk_utilization += float(word[-1].split('\n')[0].strip('%'))
+          else:
+            if line.find("nvme2n1") < 0:
+              _disk_utilization += (float(word[_dev_id1 + 8].strip('%')) + float(word[_dev_id1 + 17].split('\n')[0].strip('%')))/2.0
+            else:
+              _disk_utilization += (float(word[_dev_id1 + 8].strip('%')) + float(word[_dev_id1 + 17].strip('%')) + float(word[_dev_id1 + 26].strip('%')) + float(word[_dev_id1 + 35].split('\n')[0].strip('%')))/4.0
           _cpu_user += float(word[87].strip('%'))
           _cpu_system += float(word[88].strip('%'))
           _context_switches += float(word[89])
           _average_bandwidth += (int(word[6])+int(word[47]))/2.0
           _write_submission_latency += float(word[52])
-	  _write_completion_latency += float(word[56])
-	  _read_submission_latency  += float(word[11])
-	  _read_completion_latency  += float(word[15])
-        ret.writerow([_testnum, str(_throughput/count), str(_disk_utilization/count), str(_average_bandwidth/count), str(_iops/count)])
-      fp.close()
+          _write_completion_latency += float(word[56])
+          _read_submission_latency  += float(word[11])
+          _read_completion_latency  += float(word[15])
+          ret.writerow([_testnum, str(_iops/count), str(_disk_utilization/count), str(_average_bandwidth/count)])
+    fp.close()
 
   def iostat_read(self):
     if not os.path.isdir(self._iostat_path):
@@ -122,7 +132,7 @@ class reader:
             _cur_time[2] = (int(line.split()[1].split(':')[0]) + 12) if "PM" in line.split()[2] else int(line.split()[1].split(':')[0])
             _cur_time[3] = int(line.split()[1].split(':')[1])
             _cur_time[4] = int(line.split()[1].split(':')[2])
-            _after_time = 2592000 * (_cur_time[0] - _boot_time[0]) + 86400 * (_cur_time[1] - _boot_time[1]) + 3600 * (_cur_time[2] - _boot_time[2]) + 60 * (_cur_time[3] - _boot_time[3]) + (_cur_time[4]) 
+            _after_time = 2592000 * (_cur_time[0] - _boot_time[0]) + 86400 * (_cur_time[1] - _boot_time[1]) + 3600 * (_cur_time[2] - _boot_time[2]) + 60 * (_cur_time[3] - _boot_time[3]) + (_cur_time[4])
             _timestamp_flag = False
           if line.find("avg-cpu")>=0 and not _data_flag:
             _data_flag = True

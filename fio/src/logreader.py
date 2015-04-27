@@ -140,15 +140,18 @@ class reader:
           if _data_flag:
             if not _before_flag: # this is before data
               _before_flag = True
-              _before_software_layer = float(line.split()[0]) + float(line.split()[2])
-              _before_io_wait = float(line.split()[3])
+              _before_software_layer = float(line.split()[0]) + float(line.split()[2])/100.0
+              _before_io_wait = float(line.split()[3])/100.0
+              _before_idle_time = float(line.split()[5])/100.0
               _data_flag = False
             else:
               _before_flag = False
-              _after_software_layer = float(line.split()[0]) + float(line.split()[2])
-              _after_io_wait = float(line.split()[3])
+              _after_software_layer = float(line.split()[0]) + float(line.split()[2])/100.0
+              _after_io_wait = float(line.split()[3])/100.0
+              _after_idle_time = float(line.split()[5])/100.0
               _data_flag = False
         _software_time = _after_software_layer * _after_time - _before_software_layer * _before_time
         _io_wait = _after_io_wait * _after_time - _before_io_wait * _before_time
-        ret.writerow([_testnum, _software_time, _io_wait])
-        fp.close()
+        _idle_time = _after_idle_time * _after_time - _before_idle_time * _before_time
+        _cpu_utilization = _software_time/(_after_time - _before_time)
+        ret.writerow([_testnum, _cpu_utilization])

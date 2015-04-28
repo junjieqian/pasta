@@ -93,7 +93,9 @@ class threadreader:
           _read_submission_latency  += float(word[11])
           _read_completion_latency  += float(word[15])
         _runtime_np = np.array(_runtime)
-        ret.writerow([_testnum, str(_iops/count), str(_disk_utilization/count), str(_average_bandwidth/count), str(min(_runtime)), str(np.percentile(25)), str(np.percentile(50)), str(np.percentile(75)), str(max(_runtime))])
+        if count == 0:
+          continue
+        ret.writerow([_testnum, str(_iops/count), str(_disk_utilization/count), str(_average_bandwidth/count), str(min(_runtime)), str(np.percentile(_runtime_np, 25)), str(np.percentile(_runtime_np, 50)), str(np.percentile(_runtime_np, 75)), str(max(_runtime))])
         fp.close()
 
   def iostat_read(self):

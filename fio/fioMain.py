@@ -25,11 +25,11 @@ def main():
   if os.path.isfile(sys.argv[1]):
     util = Settings(sys.argv[1])
     util.run()
-  else if sys.argv[1] == "logreader":
+  elif sys.argv[1] == "logreader":
     logreader = reader("./workload/workload_numjobs.csv", "./Logs", "./IOSTATs")
     logreader.perf_read()
     logreader.iostat_read()
-  else if sys.argv[1] == "threadreader":
+  elif sys.argv[1] == "threadreader":
     tr = threadreader("./workload/workload_numjobs.csv", "./Logs", "./IOSTATs")
     tr.perf_read()
     tr.iostat_read()

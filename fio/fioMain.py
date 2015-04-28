@@ -32,6 +32,7 @@ def main():
   else if sys.argv[1] == "threadreader":
     tr = threadreader("./workload/workload_numjobs.csv", "./Logs", "./IOSTATs")
     tr.perf_read()
+    tr.iostat_read()
   else:
     display_usage()
 

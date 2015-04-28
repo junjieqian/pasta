@@ -65,7 +65,7 @@ class reader:
         _read_submission_latency = 0.0
         _read_completion_latency = 0.0
         _dev_id1 = -1
-	for line in fp:
+        for line in fp:
           if not "fio-2.1.3" in line:
             continue
           word = line.split(";")
@@ -89,8 +89,8 @@ class reader:
           _write_completion_latency += float(word[56])
           _read_submission_latency  += float(word[11])
           _read_completion_latency  += float(word[15])
-          ret.writerow([_testnum, str(_iops/count), str(_disk_utilization/count), str(_average_bandwidth/count)])
-    fp.close()
+        ret.writerow([_testnum, str(_iops/count), str(_disk_utilization/count), str(_average_bandwidth/count)])
+        fp.close()
 
   def iostat_read(self):
     if not os.path.isdir(self._iostat_path):

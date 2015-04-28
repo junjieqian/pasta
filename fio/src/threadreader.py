@@ -6,6 +6,7 @@ import string
 import os
 import sys
 import csv
+import numpy as np
 
 class threadreader:
   _workload = {}
@@ -47,7 +48,7 @@ class threadreader:
     if not os.path.isdir(self._perf_path):
       return
     ret = csv.writer(open("fiolog_threads.csv", "wb"))
-    ret.writerow(["testnum", "iops", "disk utilization", "average bandwidth", "thread time"])
+    ret.writerow(["testnum", "iops", "disk utilization", "average bandwidth", "minimal thread time", "1/4 thead time", "1/2 thread time", "3/4 thread time", "maximum thread time"])
     for roots, dirs, files in os.walk(self._perf_path):
       files.sort(key=lambda x:int(x.split('.')[0]))
       for f in [os.path.join(roots, fs) for fs in files]:
@@ -66,7 +67,7 @@ class threadreader:
         _read_completion_latency = 0.0
         _dev_id1 = -1
         _runtime = []
-	for line in fp:
+        for line in fp:
           if not "fio-2.1.3" in line:
             continue
           word = line.split(";")
@@ -91,8 +92,9 @@ class threadreader:
           _write_completion_latency += float(word[56])
           _read_submission_latency  += float(word[11])
           _read_completion_latency  += float(word[15])
-    ret.writerow([_testnum, str(_iops/count), str(_disk_utilization/count), str(_average_bandwidth/count)] + _runtime)
-    fp.close()
+        _runtime_np = np.array(_runtime)
+        ret.writerow([_testnum, str(_iops/count), str(_disk_utilization/count), str(_average_bandwidth/count), str(min(_runtime)), str(np.percentile(25)), str(np.percentile(50)), str(np.percentile(75)), str(max(_runtime))])
+        fp.close()
 
   def iostat_read(self):
     if not os.path.isdir(self._iostat_path):

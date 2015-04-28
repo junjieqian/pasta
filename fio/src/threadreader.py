@@ -132,6 +132,7 @@ class threadreader:
             _cur_time[4] = int(line.split()[1].split(':')[2])
             _before_time = 2592000 * (_cur_time[0] - _boot_time[0]) + 86400 * (_cur_time[1] - _boot_time[1]) + 3600 * (_cur_time[2] - _boot_time[2]) + 60 * (_cur_time[3] - _boot_time[3]) + (_cur_time[4])
             _timestamp_flag = True
+            continue
           if line.find("/2015")>=0 and not 'Linux' in line and _timestamp_flag:
             _cur_time[0] = int(line.split()[0].split('/')[0])
             _cur_time[1] = int(line.split()[0].split('/')[1])

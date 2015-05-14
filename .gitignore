@@ -6,4 +6,6 @@ S junk files
 fio/IOSTATs/*
 fio/Configures/*
 fio/results/*
+oprofile/oprofile_data
+oprofile/results
 *.pyc

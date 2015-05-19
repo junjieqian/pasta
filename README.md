@@ -1,4 +1,4 @@
-# PION (Parallel I/Os to NVMs)
+# PINN (Parallel I/Os to NVMs on NUMA)
 Scalability study of parallel I/Os to Non-volatile Memory on Many-core system
 
 ## Requirement:

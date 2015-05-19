@@ -1,4 +1,4 @@
-# pasta
+# PION (Parallel I/Os to NVMs)
 Scalability study of parallel I/Os to Non-volatile Memory on Many-core system
 
 ## Requirement:

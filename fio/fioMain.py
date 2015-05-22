@@ -16,7 +16,7 @@ def display_usage():
   print '-' * 66
   print 'Usage: %s [options]'%sys.argv[0]
   print '  "workload_file": Set the test workload file path required'
-  print '  logreader: Read the logs (path predefined, but subject to change)'
+  print '  logreader: Read the logs (path predefined)if not in workload Logs IOstats'
   print '  threadreader: Read the logs (logs without group_reporting)'
   print '*' * 66
   return
@@ -26,7 +26,10 @@ def main():
     util = Settings(sys.argv[1])
     util.run()
   elif sys.argv[1] == "logreader":
-    logreader = reader("./workload/workload_numjobs.csv", "./Logs", "./IOSTATs")
+    if len(sys.argv) > 2:
+      logreader = reader(sys.argv[2], sys.argv[3], sys.argv[4])
+    else:
+      logreader = reader("./workload/workload_numjobs.csv", "./Logs", "./IOSTATs")
     logreader.perf_read()
     logreader.iostat_read()
   elif sys.argv[1] == "threadreader":

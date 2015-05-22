@@ -16,7 +16,7 @@ class Settings:
   _iodepth = 1
   _workers = 1    # num of jobs, or IO threads
   _blocksize = '4kb'
-  _filesize = '100gb'
+  _filesize = '10m'
   _runtime = 14400
   _patern = 'random'
   _rw = 'read'
@@ -47,7 +47,7 @@ class Settings:
           # col7  = Start Delay     col8  = Num of jobs    col9 = IOdepth
           # col10 = Target devices  col11 = Numa nodes
           self._testnum = row[0]                         # test id
-          #self._filesize = str(row[1]).lower()
+          self._filesize = str(row[1]).lower()
           self._blocksize = str(row[2]).lower()
           self._patern = row[3]
           _access_list = self._patern.split()

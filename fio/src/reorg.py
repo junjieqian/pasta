@@ -9,7 +9,7 @@ def main():
   ret = csv.writer(open("fiolog_ret.csv", "wb"))
   ret.writerow(["testnum", "iops", "disk utilization", "average bandwidth"])
   strs = {}
-  with open(self._ret, 'rU') as csvreader:
+  with open(_ret, 'rU') as csvreader:
     reader = csv.reader(csvreader, delimiter=',', quotechar='|')
     for row in reader:
       if "testnum" in row:

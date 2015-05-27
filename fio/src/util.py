@@ -13,7 +13,7 @@ class Settings:
   _output = '--output'
 
   _testnum = 1
-  _iodepth = 1
+  _iodepth = 32
   _workers = 1    # num of jobs, or IO threads
   _blocksize = '4kb'
   _filesize = '10m'
@@ -55,7 +55,8 @@ class Settings:
           self._ramptime = row[5]
           self._startdelay = row[6]
           self._workers = row[7]
-          self._iodepth = row[8]
+#          self._iodepth = row[8]
+          self._iodepth = 32
           self._device = row[9]
           _numa_nodes = row[10]
 

@@ -48,7 +48,8 @@ class Settings:
           # col10 = Target devices  col11 = Numa nodes
           self._testnum = row[0]                         # test id
           self._filesize = str(row[1]).lower()
-          self._blocksize = str(row[2]).lower()
+#          self._blocksize = str(row[2]).lower()
+          self._blocksize = "128k"
           self._patern = row[3]
           _access_list = self._patern.split()
           self_runtime = row[4]
@@ -64,7 +65,7 @@ class Settings:
           job_filename = now + "_" + self._testnum
           job_log_filename = _log_dir + os.sep + self._testnum + ".log"
 
-          _command = "sudo fio" + " " + "--name=%s"%self._testnum + " " + \
+          _command = "sudo ~/fio-master/fio" + " " + "--name=%s"%self._testnum + " " + \
                           "--output=%s"%job_log_filename + " " + "--minimal" + " " + \
                           "--bs=%s"%self._blocksize + " " + "--ioengine=libaio" + " " + \
                           "--iodepth=%s"%self._iodepth + " " + "--size=%s"%self._filesize + \

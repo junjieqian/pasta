@@ -66,7 +66,7 @@ class reader:
         _read_completion_latency = 0.0
         _dev_id1 = -1
         for line in fp:
-          if not "fio-2.1.3" in line:
+          if not "fio-2.2.8" in line:
             continue
           word = line.split(";")
           _dev_id1 = word.index("nvme0n1")

@@ -1,5 +1,5 @@
 # PINN (Parallel I/Os to NVMs on NUMA)
-Scalability study of parallel I/Os to Non-volatile Memory on Many-core system
+Scalability study of parallel I/Os to Non-volatile Memories on Many-core system
 
 ## Requirement:
 1. Linux kernel enabled with Multi-queue block layer support
